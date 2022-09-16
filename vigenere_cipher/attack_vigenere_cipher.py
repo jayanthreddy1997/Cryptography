@@ -1,8 +1,14 @@
 from utils.constants import ENGLISH_CHAR_PROB
+from vigenere_cipher.vigenere_cipher_impl import decrypt_vigenere_cipher
 
 
-def get_shift_cipher_key(cipher_text):
-    # Part1: Identify the key length (using index of coincidence)
+def get_vigenere_cipher_key(cipher_text: str) -> str:
+    """
+    Function to recover the key based on the cipher text
+    :param cipher_text: Cipher text in english alphabet
+    :return: Recovered key
+    """
+    # Part1: Identify the key length (using index of coincidence algorithm)
     key_length = -1
     min_diff = 1
     for m in range(1, 10):
@@ -45,17 +51,7 @@ def _get_integer_encoding(c):
     return ord(c) - ord('a')
 
 
-def decrypt_shift_cipher(k, cipher_text):
-    plain_text = ''
-
-    for i in range(len(cipher_text)):
-        plain_text += chr((ord(cipher_text[i]) - ord(k[i % len(k)])) % 26 + ord('a'))
-
-    print(f'Decrypted text using key "{k}" is "{plain_text}"')
-    return plain_text
-
-
-if __name__ == '__main__':
+def main():
     cipher_text = 'khrxbukeqvhmkefrtmdeelqmtozpczcyxqcieafwvqlnvwspjtnwsefrnpsdzcnlgmkrnqgofnglbqetnoqalngumxfcnwspgr' \
                   'vpodzlllbzfrgkoyvrvfoukcbqgujtfrtrzfgbgfrtrvorvdruoxuifwfuttsljqdawrfgeiafcdgoedhqutrufukoelseeiah' \
                   'aueoerifcyvquujlnqrernqwvdveuxbpieqwkqetlvwjznqloziefhfhrtvrbenigkzudighrefvrusuxngbwfzsgksfyiegzm' \
@@ -66,5 +62,9 @@ if __name__ == '__main__':
                   'ywwzxpbwcrtuywidvsnqrqkhalqukirvozuigvdaguydhufnudgnveasfawohqrxpsuddqublfszkuelseffvpauxrnwwaeigk' \
                   'oerhvjvxpdvysdjepowyrtrdbpxebjfmghldbpzsbitutinozkiepruzzzrgoefnrrtfyefhjqetrhbqtoyruutayomyvgngwh' \
                   'vrfhqalnguwqj'
-    k = get_shift_cipher_key(cipher_text)
-    decrypt_shift_cipher(k, cipher_text)
+    k = get_vigenere_cipher_key(cipher_text)
+    decrypt_vigenere_cipher(cipher_text, k)
+
+
+if __name__ == '__main__':
+    main()

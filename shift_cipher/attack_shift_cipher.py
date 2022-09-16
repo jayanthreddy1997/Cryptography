@@ -1,7 +1,13 @@
 from utils.constants import ENGLISH_CHAR_PROB
+from shift_cipher.shift_cipher_impl import decrypt_shift_cipher
 
 
-def get_shift_cipher_key(cipher_text):
+def get_shift_cipher_key(cipher_text: str) -> int:
+    """
+    Function to recover the key based on the cipher text
+    :param cipher_text: Cipher text in english alphabet
+    :return: Recovered key
+    """
     cipher_text = cipher_text.lower()
     cipher_char_prob = {}
 
@@ -26,18 +32,11 @@ def get_shift_cipher_key(cipher_text):
     return key
 
 
-def decrypt_shift_cipher(k, cipher_text):
-    cipher_text = cipher_text.lower()
-    plain_text = ''
-
-    for i in range(len(cipher_text)):
-        plain_text += chr(((ord(cipher_text[i]) - k - ord('a')) % 26) + ord('a'))
-
-    print(f'Decrypted text for key {k} and ciphertext {cipher_text} is {plain_text}')
-    return plain_text
+def main():
+    cipher_text = 'OVDTHUFWVZZPISLRLFZHYLAOLYL'
+    key_ = get_shift_cipher_key(cipher_text)
+    decrypt_shift_cipher(cipher_text.lower(), key_)
 
 
 if __name__ == '__main__':
-    cipher_text = 'OVDTHUFWVZZPISLRLFZHYLAOLYL'
-    k = get_shift_cipher_key(cipher_text)
-    decrypt_shift_cipher(k, cipher_text)
+    main()
